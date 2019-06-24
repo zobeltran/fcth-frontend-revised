@@ -1,0 +1,482 @@
+<template>
+  <v-app>
+    <div v-if="!loggedIn">
+      <v-toolbar color="indigo" dark fixed app>
+        <v-toolbar-title>{{ title }}</v-toolbar-title>
+      </v-toolbar>
+    </div>
+
+    <div v-else-if="loggedIn && loggedAdmin">
+      <v-navigation-drawer v-model="drawer" absolute temporary>
+        <v-list dense>
+          <v-list-tile v-for="(menu,index) in menusAdmin" :key="index" :to="{name: menu.route}">
+            <v-list-tile-action>
+              <v-icon>{{ menu.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>{{ menu.name }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <!-- ADMIN PACKAGE DROPDOWN -->
+          <v-list-group prepend-icon="mdi-shopping" no-action>
+            <v-list-tile slot="activator">
+              <v-list-tile-title>Package</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile
+              v-for="(menu, index) in menuAdminPackages"
+              :key="index"
+              :to="{name: menu.route}"
+            >
+              <!-- <v-list-tile-action> -->
+              <!-- <v-icon>{{ menu.icon }}</v-icon> -->
+              <!-- </v-list-tile-action> -->
+              <v-list-tile-content>
+                <v-list-tile-title>{{ menu.name }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-group>
+          <!-- ADMIN TICKETS DROPDOWN -->
+          <v-list-group prepend-icon="mdi-airport" no-action>
+            <v-list-tile slot="activator">
+              <v-list-tile-title>Tickets</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile
+              v-for="(menu, index) in menusAdminTickets"
+              :key="index"
+              :to="{name: menu.route}"
+            >
+              <!-- <v-list-tile-action> -->
+              <!-- <v-icon>{{ menu.icon }}</v-icon> -->
+              <!-- </v-list-tile-action> -->
+              <v-list-tile-content>
+                <v-list-tile-title>{{ menu.name }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-group>
+          <!-- ADMIN HOTEL DROPDOWN -->
+          <v-list-group prepend-icon="hotel" no-action>
+            <v-list-tile slot="activator">
+              <v-list-tile-title>Hotels</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile
+              v-for="(menu, index) in menusAdminHotels"
+              :key="index"
+              :to="{name: menu.route}"
+            >
+              <!-- <v-list-tile-action> -->
+              <!-- <v-icon>{{ menu.icon }}</v-icon> -->
+              <!-- </v-list-tile-action> -->
+              <v-list-tile-content>
+                <v-list-tile-title>{{ menu.name }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-group>
+          <v-list-tile :to="{name: 'logout'}">
+            <v-list-tile-action>
+              <v-icon>mdi-account-remove</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Logout</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-navigation-drawer>
+      <v-toolbar color="indigo" dark fixed app>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-title>{{ titleEmployee }}</v-toolbar-title>
+      </v-toolbar>
+    </div>
+
+    <div v-else-if="loggedIn && loggedFO">
+      <v-navigation-drawer v-model="drawer" absolute temporary>
+        <v-list dense>
+          <v-list-tile v-for="(menu,index) in menusFO" :key="index" :to="{name: menu.route}">
+            <v-list-tile-action>
+              <v-icon>{{ menu.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>{{ menu.name }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-navigation-drawer>
+      <v-toolbar color="indigo" dark fixed app>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-title>{{ titleEmployee }}</v-toolbar-title>
+      </v-toolbar>
+    </div>
+
+    <div v-else-if="loggedIn && loggedRO">
+      <v-navigation-drawer v-model="drawer" absolute temporary>
+        <v-list dense>
+          <v-list-tile v-for="(menu,index) in menusRO" :key="index" :to="{name: menu.route}">
+            <v-list-tile-action>
+              <v-icon>{{ menu.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>{{ menu.name }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <!-- ADMIN PACKAGE DROPDOWN -->
+          <v-list-group prepend-icon="mdi-shopping" no-action>
+            <v-list-tile slot="activator">
+              <v-list-tile-title>Package</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile
+              v-for="(menu, index) in menuAdminPackages"
+              :key="index"
+              :to="{name: menu.route}"
+            >
+              <!-- <v-list-tile-action> -->
+              <!-- <v-icon>{{ menu.icon }}</v-icon> -->
+              <!-- </v-list-tile-action> -->
+              <v-list-tile-content>
+                <v-list-tile-title>{{ menu.name }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-group>
+          <!-- ADMIN TICKETS DROPDOWN -->
+          <v-list-group prepend-icon="mdi-airport" no-action>
+            <v-list-tile slot="activator">
+              <v-list-tile-title>Tickets</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile
+              v-for="(menu, index) in menusAdminTickets"
+              :key="index"
+              :to="{name: menu.route}"
+            >
+              <!-- <v-list-tile-action> -->
+              <!-- <v-icon>{{ menu.icon }}</v-icon> -->
+              <!-- </v-list-tile-action> -->
+              <v-list-tile-content>
+                <v-list-tile-title>{{ menu.name }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-group>
+          <!-- ADMIN HOTEL DROPDOWN -->
+          <v-list-group prepend-icon="hotel" no-action>
+            <v-list-tile slot="activator">
+              <v-list-tile-title>Hotels</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile
+              v-for="(menu, index) in menusAdminHotels"
+              :key="index"
+              :to="{name: menu.route}"
+            >
+              <!-- <v-list-tile-action> -->
+              <!-- <v-icon>{{ menu.icon }}</v-icon> -->
+              <!-- </v-list-tile-action> -->
+              <v-list-tile-content>
+                <v-list-tile-title>{{ menu.name }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-group>
+          <v-list-tile :to="{name: 'logout'}">
+            <v-list-tile-action>
+              <v-icon>mdi-account-remove</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Logout</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile :to="{name: 'editprofile'}">
+            <v-list-tile-action>
+              <v-icon>mdi-account-edit</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Edit Profile</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-navigation-drawer>
+      <v-toolbar color="indigo" dark fixed app>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-title>{{ titleEmployee }}</v-toolbar-title>
+      </v-toolbar>
+    </div>
+
+    <div v-else-if="loggedIn && loggedCU">
+      <v-navigation-drawer v-model="drawer" absolute temporary>
+        <v-list dense>
+          <v-list-tile v-for="(menu,index) in menus" :key="index" :to="{name: menu.route}">
+            <v-list-tile-action>
+              <v-icon>{{ menu.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>{{ menu.name }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <!-- Custom Bookings -->
+          <v-list-group prepend-icon="mdi-airport" no-action>
+            <v-list-tile slot="activator">
+              <v-list-tile-title>Custom Bookings</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile v-for="(menu, index) in menuCustom" :key="index" :to="{name: menu.route}">
+              <!-- <v-list-tile-action> -->
+              <!-- <v-icon>{{ menu.icon }}</v-icon> -->
+              <!-- </v-list-tile-action> -->
+              <v-list-tile-content>
+                <v-list-tile-title>{{ menu.name }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-group>
+          <!-- My Bookings -->
+          <v-list-group prepend-icon="mdi-airport" no-action>
+            <v-list-tile slot="activator">
+              <v-list-tile-title>My Bookings</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile
+              v-for="(menu, index) in menusBookings"
+              :key="index"
+              :to="{name: menu.route}"
+            >
+              <!-- <v-list-tile-action> -->
+              <!-- <v-icon>{{ menu.icon }}</v-icon> -->
+              <!-- </v-list-tile-action> -->
+              <v-list-tile-content>
+                <v-list-tile-title>{{ menu.name }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-group>
+        </v-list>
+      </v-navigation-drawer>
+      <v-toolbar color="indigo" dark fixed app>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-title>{{ title }}</v-toolbar-title>
+      </v-toolbar>
+    </div>
+
+    <v-content>
+      <transition
+        name="router-animation"
+        leave-active-class="animate fadeOutLeftBig faster"
+        enter-active-class="animated fadeInRightBig faster"
+        mode="out-in"
+      >
+        <router-view/>
+      </transition>
+    </v-content>
+    <div v-if="!loggedIn">
+      <v-footer height="auto" color="primary lighten-1">
+        <v-layout justify-center row wrap>
+          <v-btn
+            color="white"
+            flat
+            round
+            :to="{name: 'registerCustomer'}"
+          >No account? Register in here</v-btn>
+          <v-btn color="white" flat round :to="{name: 'login'}">Log-in</v-btn>
+          <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
+            &copy;2018 —
+            <strong>First Choice Travel Hub</strong>
+          </v-flex>
+        </v-layout>
+      </v-footer>
+    </div>
+
+    <div v-else>
+      <v-footer height="auto" color="primary lighten-1">
+        <v-layout justify-center row wrap>
+          <!-- <v-btn color="white" flat round :to="{name: 'logout'}">Logout</v-btn> -->
+          <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
+            &copy;2018 —
+            <strong>First Choice Travel Hub</strong>
+          </v-flex>
+        </v-layout>
+      </v-footer>
+    </div>
+  </v-app>
+</template>
+
+<style scoped>
+@import "https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css";
+
+.custom-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
+
+
+<script>
+export default {
+  data() {
+    return {
+      drawer: false,
+      title: "First Choice Travel Hub " + process.env.VUE_APP_ENV,
+      titleEmployee:
+        "First Choice Travel Hub Employee Dashboard " + process.env.VUE_APP_ENV,
+      menus: [
+        { name: "Home", icon: "home", route: "home" },
+        { name: "Packages", icon: "mdi-shopping", route: "customerPackage" },
+
+         {
+           name: "Inquiries",
+           icon: "mdi-comment-alert",
+           route: "customerflightInquiries"
+         },
+         {
+           name: "Inquiries",
+           icon: "mdi-comment-alert",
+           route: "customerhotelInquiries"
+         },
+         {
+          name: "Invite a friend",
+          icon: "mdi-comment-alert",
+          route: "customerInvite"
+         },
+        { name: "Logout", icon: "mdi-account-remove", route: "logout" },
+        { name: "Edit Profile", icon: "mdi-account-edit", route: "editprofile" }
+      ],
+      menuCustom: [
+        { name: "Tickets", icon: "mdi-airport", route: "customerTicket" },
+        { name: "Hotels", icon: "hotel", route: "customerHotel" }
+      ],
+      menusBookings: [
+        { name: "Hotel Bookings", icon: "something", route: "hotelBookings" },
+        { name: "Ticket Bookings", icon: "something", route: "flightBooking" },
+        { name: "Package Bookings", icon: "something", route: "packageBooking" }
+      ],
+      menusAdminTickets: [
+        {
+          name: "View Approved Flights",
+          icon: "mdi-airport",
+          route: "viewFlights"
+        },
+        { name: "Add Tickets", icon: "mdi-airport", route: "addFlights" },
+        {
+          name: "Approve Flights",
+          icon: "mdi-airport",
+          route: "flightApproval"
+        }
+      ],
+      menusAdminHotels: [
+        { name: "View Approved Hotels", icon: "hotel", route: "viewHotels" },
+        { name: "Add Hotels", icon: "hotel", route: "addHotels" },
+        {
+          name: "Approve Hotels",
+          icon: "mdi-airport",
+          route: "hotelsForApproval"
+        }
+      ],
+      menuAdminPackages: [
+        { name: "View Packages", icon: "mdi-shopping", route: "viewPackages" },
+        { name: "Add Packages", icon: "mdi-shopping", route: "addPackage" },
+        {
+          name: "View Approved Packages",
+          icon: "mdi-shopping",
+          route: "packageForApproval"
+        }
+      ],
+      menusAdmin: [
+        { name: "Home", icon: "home", route: "employeeHome" },
+        // { name: "Add Packages", icon: "mdi-shopping", route: "addPackage" },
+
+        // { name: "View Packages", icon: "mdi-shopping", route: "viewPackages" },
+        {
+          name: "Packages Payments",
+          icon: "mdi-shopping",
+          route: "employeePackage"
+        },
+        {
+          name: "Tickets Payments",
+          icon: "mdi-airport",
+          route: "employeeTicket"
+        },
+        { name: "Hotels Payments", icon: "hotel", route: "addHotel" },
+        {
+          name: "Inquiries",
+          icon: "mdi-comment-alert",
+          route: "employeeInquiries"
+        },
+        {
+          name: "Flight Bookings",
+          icon: "mdi-airport",
+          route: "flightBookings"
+        },
+        { name: "Hotel Bookings", icon: "hotel", route: "hotelBookings" },
+        {
+          name: "Register Employee",
+          icon: "mdi-account-plus",
+          route: "register"
+        }
+        // { name: "Logout", icon: "mdi-account-remove", route: "logout" }
+      ],
+      menusRO: [
+        { name: "Home", icon: "home", route: "employeeHome" },
+      ],
+      menusFO: [
+        { name: "Home", icon: "home", route: "employeeHome" },
+        {
+          name: "Packages Payments",
+          icon: "mdi-shopping",
+          route: "employeePackage"
+        },
+        {
+          name: "Tickets Payments",
+          icon: "mdi-airport",
+          route: "employeeTicket"
+        },
+        { name: "Hotels Payments", icon: "hotel", route: "addHotel" },
+        {
+          name: "hotelInquiries",
+          icon: "mdi-comment-alert",
+          route: "hotelInquiries"
+        },
+        // {name: 'Register Employee', icon: 'mdi-account-plus', route: 'register'},
+        { name: "Logout", icon: "mdi-account-remove", route: "logout" }
+      ]
+    };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.getters.loggedIn;
+    },
+    loggedAdmin() {
+      return this.$store.getters.loggedAdmin;
+    },
+    loggedFO() {
+      return this.$store.getters.loggedFinancialOfficer;
+    },
+    loggedRO() {
+      return this.$store.getters.loggedReservationOfficer;
+    },
+    loggedCU() {
+      return this.$store.getters.loggedCustomer;
+    }
+  }
+};
+</script>

@@ -1,0 +1,43 @@
+{
+  "name": "flask-vue",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.2.5",
+    "@mdi/font": "^2.8.94",
+    "axios": "^0.18.0",
+    "material-design-icons-iconfont": "^3.0.3",
+    "register-service-worker": "^1.6.2",
+    "roboto-fontface": "*",
+    "vee-validate": "^2.1.7",
+    "vue": "^2.6.7",
+    "vue-class-component": "^6.3.2",
+    "vue-loading-overlay": "^3.2.0",
+    "vue-property-decorator": "^7.3.0",
+    "vue-recaptcha": "^1.1.1",
+    "vue-router": "^3.0.2",
+    "vue-stripe-checkout": "^1.2.6",
+    "vuetify": "^1.5.4",
+    "vuex": "^3.1.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-plugin-eslint": "^3.4.0",
+    "@vue/cli-plugin-pwa": "^3.4.0",
+    "@vue/cli-plugin-typescript": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
+    "@vue/eslint-config-typescript": "^4.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.1.0",
+    "typescript": "~3.2.2",
+    "vue-template-compiler": "^2.6.7"
+  }
+}
